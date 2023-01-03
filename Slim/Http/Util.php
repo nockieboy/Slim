@@ -57,7 +57,11 @@ class Util
      */
     public static function stripSlashesIfMagicQuotes($rawData, $overrideStripSlashes = null)
     {
-        $strip = is_null($overrideStripSlashes) ? get_magic_quotes_gpc() : $overrideStripSlashes;
+        // get_magic_quotes_gpc() function is deprecated in PHP 7.4+ and removed from PHP 8.
+        // The following line has been modified to return false instead of calling the undefined function
+        // to make Slim 2 compatible with PHP 8+.
+        //$strip = is_null($overrideStripSlashes) ? get_magic_quotes_gpc() : $overrideStripSlashes;
+        $strip = is_null($overrideStripSlashes) ? false : $overrideStripSlashes;
         if ($strip) {
             return self::stripSlashes($rawData);
         }
